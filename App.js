@@ -1,19 +1,41 @@
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import HomeScreen from './components/HomeScreen';
+import SettingsScreen from './components/SettingsScreen';
 
-const App = () => {
+const Tab = createBottomTabNavigator();
+
+function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <HomeScreen />
-    </SafeAreaView>
-  );
-};
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color, size }) => {
+            let iconName;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+            if (route.name === 'Home') {
+              iconName = 'home-outline';
+            } else if (route.name === 'Settings') {
+              iconName = 'settings-outline';
+            }
+
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: 'blue',
+          inactiveTintColor: 'gray',
+        }}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
 
 export default App;

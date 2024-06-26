@@ -1,214 +1,183 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, FlatList,TouchableOpacity } from 'react-native';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'; // You can use other icon libraries too
 
-const HomeScreen = () => {
+export default function App() {
+  const transactions = [
+    { id: '1', title: 'Apple Store', subtitle: 'Entertainment', amount: -5.99, icon: 'apple' },
+    { id: '2', title: 'Spotify', subtitle: 'Music', amount: -12.99, icon: 'spotify' },
+    { id: '3', title: 'Money Transfer', subtitle: 'Transaction', amount: 300, icon: 'cash' },
+    { id: '4', title: 'Grocery', subtitle: '', amount: -88, icon: 'cart' },
+  ];
+
+  const renderTransaction = ({ item }) => (
+    <View style={styles.transactionItem}>
+      <MaterialCommunityIcons name={item.icon} size={40} color="black" />
+      <View style={styles.transactionDetails}>
+        <Text style={styles.transactionTitle}>{item.title}</Text>
+        <Text style={styles.transactionSubtitle}>{item.subtitle}</Text>
+      </View>
+      <Text style={[styles.transactionAmount, { color: item.amount > 0 ? 'blue' : 'black' }]}>
+        {item.amount > 0 ? `$${item.amount}` : `-$${-item.amount}`}
+      </Text>
+    </View>
+  );
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.header}>
-        <Image
-          source={require('../assets/profile.png')}
-          style={styles.profilePicture}
-        />
-        <View style={styles.headerText}>
-          <Text style={styles.headerTextUp}>Welcome back,</Text>
-          <Text style={styles.headerTextDown}>Aforve Peter Kwame Atsu</Text>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.header}>
+          <Image source={require('../assets/profile.png')} style={styles.profileImage} />
+          <View>
+            <Text style={styles.welcomeText}>Welcome back,</Text>
+            <Text style={styles.username}>Aforve Peter Kwame Atsu</Text>
+          </View>
+          <Ionicons name="search" size={24} color="black" />
         </View>
-        <Image
-          source={require('../assets/search.png')}
-          style={styles.searchIcon}
-        />
-      </View>
-      <Image
-        source={require('../assets/Card.png')}
-        style={styles.debitCard}
-      />
-      <View style={styles.horizontalLine}>
-        <View style={styles.imageWithText}>
-          <Image
-            source={require('../assets/send.png')}
-            style={styles.smallImage}
-          />
-          <Text style={styles.imageText}>Send</Text>
-        </View>
-        <View style={styles.imageWithText}>
-          <Image
-            source={require('../assets/recieve.png')}
-            style={styles.smallImage}
-          />
-          <Text style={styles.imageText}>Recieve</Text>
-        </View>
-        <View style={styles.imageWithText}>
-          <Image
-            source={require('../assets/loan.png')}
-            style={styles.smallImage}
-          />
-          <Text style={styles.imageText}>Loan</Text>
-        </View>
-        <View style={styles.imageWithText}>
-          <Image
-            source={require('../assets/topUp.png')}
-            style={styles.smallImage}
-          />
-          <Text style={styles.imageText}>Topup</Text>
-        </View>
-      </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.leftText}>Transactions</Text>
-        <Text style={styles.rightText}>Sell All</Text>
-      </View>
-      <View style={styles.verticalImages}>
-        <View style={styles.imageWithTextVertical}>
-          <Image
-            source={require('../assets/apple.png')}
-            style={styles.verticalImage}
-          />
-          <Text style={styles.imageText}>Apple Store</Text>
-          <Text style={styles.imageTextUnder}>Entertainment</Text>
-        </View>
-        <View style={styles.imageWithTextVertical}>
-          <Image
-            source={require('../assets/spotify.png')}
-            style={styles.verticalImage}
-          />
-          <Text style={styles.imageText}>Spotify</Text>
-          <Text style={styles.imageTextUnder}>Music</Text>
-        </View>
-        <View style={styles.imageWithTextVertical}>
-          <Image
-            source={require('../assets/moneyTransfer.png')}
-            style={styles.verticalImage}
-          />
-          <Text style={styles.imageText}>Money Transfer</Text>
-          <Text style={styles.imageTextUnder}>Transaction</Text>
-        </View>
-        <View style={styles.imageWithTextVertical}>
-          <Image
-            source={require('../assets/grocery.png')}
-            style={styles.verticalImage}
-          />
-          <Text style={styles.imageText}>Grocery</Text>
-         
-        </View>
-      </View>
-      <View style={styles.horizontalLine}>
-        <View style={styles.imageWithText}>
-          <Image
-            source={require('../assets/home.png')}
-            style={styles.smallImage}
-          />
-          <Text style={styles.imageText}>Home</Text>
-         
-        </View>
-        <View style={styles.imageWithText}>
-          <Image
-            source={require('../assets/myCards.png')}
-            style={styles.smallImage}
-          />
-          <Text style={styles.imageText}>My cards</Text>
+        
+        <View >
+        
+
+            <Image source={require('../assets/Card.png')} style={styles.cardLogo} />
+            <View  style={{flexDirection:'row',margin:20}}>
+                <Text style={{left:50}}>Transactions</Text>
+                <TouchableOpacity style={{left:'85%',color:'blue'}}>See All</TouchableOpacity>
+            </View>
           
         </View>
-        <View style={styles.imageWithText}>
-          <Image
-            source={require('../assets/statictics.png')}
-            style={styles.smallImage}
-          />
-          <Text style={styles.imageText}>Statistics</Text>
+        
+        <View style={styles.actions}>
+          <View style={styles.actionItem}>
+            <Ionicons name="arrow-up" size={24} color="gray" />
+            <Text style={styles.actionLabel}>Sent</Text>
+          </View>
+          <View style={styles.actionItem}>
+            <Ionicons name="arrow-down" size={24} color="gray" />
+            <Text style={styles.actionLabel}>Receive</Text>
+          </View>
+          <View style={styles.actionItem}>
+            <Ionicons name="logo-usd" size={24} color="gray" />
+            <Text style={styles.actionLabel}>Loan</Text>
+          </View>
+          <View style={styles.actionItem}>
+            <Ionicons name="cloud-upload-outline" size={24} color="gray" />
+            <Text style={styles.actionLabel}>Topup</Text>
+          </View>
         </View>
-        <View style={styles.imageWithText}>
-          <Image
-            source={require('../assets/settings.png')}
-            style={styles.smallImage}
-          />
-          <Text style={styles.imageText}>Settings</Text>
-        </View>
-      </View>
-    </ScrollView>
+        
+        <FlatList
+          data={transactions}
+          renderItem={renderTransaction}
+          keyExtractor={item => item.id}
+          style={styles.transactionList}
+        />
+      </ScrollView>
+      
+      
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    padding: 16,
-    backgroundColor: '#fff',
+    flex: 1,
+    backgroundColor: 'white',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
+    padding: 16,
     justifyContent: 'space-between',
   },
-  profilePicture: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
-  headerText: {
-    flex: 1,
-    marginLeft: 10,
+  welcomeText: {
+    fontSize: 16,
+    color: 'gray',
+    right:'150%'
   },
-  headerTextUp: {
-    fontSize: 18,
+  username: {
+    fontSize: 20,
     fontWeight: 'bold',
+    right:'150%'
   },
-  headerTextDown: {
+  card: {
+    backgroundColor: 'purple',
+    borderRadius: 8,
+    padding: 16,
+    margin: 16,
+  },
+  cardNumber: {
+    color: 'white',
+    fontSize: 18,
+    marginBottom: 8,
+  },
+  cardName: {
+    color: 'white',
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  cardDetails: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  cardLabel: {
+    color: 'white',
+    fontSize: 12,
+  },
+  cardValue: {
+    color: 'white',
     fontSize: 14,
+  },
+  cardLogo: {
+    width: 1000,
+    height: 500,
+    borderRadius:20,
+    marginHorizontal:100
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: 16,
+  },
+  actionItem: {
+    alignItems: 'center',
+  },
+  actionLabel: {
+    color: 'gray',
+    marginTop: 4,
+  },
+  transactionList: {
+    paddingHorizontal: 16,
+  },
+  transactionItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 8,
+  },
+  transactionDetails: {
+    flex: 1,
+    marginLeft: 16,
+  },
+  transactionTitle: {
+    fontSize: 16,
+  },
+  transactionSubtitle: {
     color: 'gray',
   },
-  searchIcon: {
-    width: 30,
-    height: 30,
+  transactionAmount: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
-  debitCard: {
-    width: '100%',
-    height: 150,
-    marginVertical: 20,
-  },
-  horizontalLine: {
+  bottomNavigation: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-around',
-    marginVertical: 10,
-  },
-  imageWithText: {
-    alignItems: 'center',
-  },
-  smallImage: {
-    width: 50,
-    height: 50,
-  },
-  imageText: {
-    marginTop: 5,
-    fontSize: 14,
-  },
-  imageTextUnder: {
-    marginBottom:5,
-    fontSize:11,
-
-  },
-  textContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 20,
-  },
-  leftText: {
-    fontSize: 16,
-  },
-  rightText: {
-    fontSize: 16,
-  },
-  verticalImages: {
-    marginVertical: 10,
-  },
-  imageWithTextVertical: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 5,
-  },
-  verticalImage: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
+    paddingVertical: 16,
+    borderTopWidth: 1,
+    borderTopColor: 'lightgray',
   },
 });
-
-export default HomeScreen;
